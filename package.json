@@ -1,0 +1,11 @@
+{
+  "name": "citilight-codec",
+  "version": "1.0.0",
+  "description": "Compact binary codec for LoRaWAN streetlight controller commands",
+  "main": "codec.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "license": "MIT",
+  "private": true
+}
