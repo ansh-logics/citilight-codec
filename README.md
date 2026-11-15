@@ -2,6 +2,23 @@
 
 A compact binary codec for a LoRaWAN streetlight controller. It encodes human-readable commands into small byte packets and decodes packets back into readable commands.
 
+## Requirements coverage
+
+The assignment lists seven commands. The four modes share one Set Mode command, so the codec uses five command IDs.
+
+| Requirement | Command | Example packet |
+|---|---|---|
+| 1. On/Off | `0x01` On/Off | `01 01` (on) |
+| 2. Dimming | `0x02` Dimming | `02 32` (50%) |
+| 3. Always On Mode | `0x03` Set Mode, value `1` | `03 01` |
+| 4. Always Off Mode | `0x03` Set Mode, value `0` | `03 00` |
+| 5. Schedule Mode | `0x03` Set Mode, value `2` | `03 02` |
+| 6. ALS Mode | `0x03` Set Mode, value `3`, thresholds via `0x04` Configure ALS | `03 03`, `04 14 1E` |
+| 7. Set Schedule | `0x05` Set Schedule | `05 11 1E 00 6C 64 8A 32` |
+| Bonus: ChirpStack codec | `encodeDownlink` / `decodeUplink` | see [ChirpStack](#chirpstack) |
+
+All packets fit the IN865 limit of 51 bytes at the slowest data rate (DR0).
+
 ## Design goals
 
 - **Fit the worst case.** Every packet fits the IN865 limit at the slowest data rate (DR0, SF12/125 kHz): **51 bytes** of application payload. Far-away streetlights run at DR0, so the codec is sized for them.
